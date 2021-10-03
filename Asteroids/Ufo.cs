@@ -26,7 +26,7 @@ namespace Asteroids
         {
             //bool needTeleport = false;
             bool needTeleport = rnd.Next(0, 1000) > 996;
-            bool needChangeDir = rnd.Next(0, 100) > 97;
+            bool needChangeDir = rnd.Next(0, 1000) > 970;
 
             if (needTeleport)
             {
@@ -37,24 +37,27 @@ namespace Asteroids
             }
             else if (needChangeDir)
             {
-                dir.X = rnd.Next(-5, 5);
-                dir.Y = rnd.Next(-5, 5);
-            } 
-            else { 
+                // Более плавные повороты и ограничение скорости
+                dir.X = rnd.Next(Math.Max(dir.X - 3, -5), Math.Min(dir.X + 3, 5)); 
+                dir.Y = rnd.Next(Math.Max(dir.Y - 3, -5), Math.Min(dir.Y + 3, 5));
+            }
+            else
+            {
                 pos.X = pos.X + dir.X;
                 pos.Y = pos.Y + dir.Y;
-
-                if (pos.X < 0 | pos.X > (Game.Width - 100))
+            }
+            
+            if (pos.X < 0 | pos.X > (Game.Width - 100))
                 {
                     dir.X = -dir.X;
                 }
 
-                if (pos.Y < 0 | pos.Y > (Game.Height - 100))
+            if (pos.Y < 0 | pos.Y > (Game.Height - 100))
                 {
                     dir.Y = -dir.Y;
                 }
 
-            }
+            
          
         }
     }
