@@ -25,7 +25,7 @@ namespace Asteroids
         public override void Update()
         {
             //bool needTeleport = false;
-            bool needTeleport = rnd.Next(0, 1000) > 995;
+            bool needTeleport = rnd.Next(0, 1000) > 996;
             bool needChangeDir = rnd.Next(0, 100) > 97;
 
             if (needTeleport)
