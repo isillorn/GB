@@ -49,13 +49,14 @@
     <Compile Include="Asteroid.cs" />
     <Compile Include="BaseObject.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="GameObjectException.cs" />
     <Compile Include="ICollision.cs" />
-    <Compile Include="Ufo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Ufo.cs" />
     <Compile Include="Star.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +81,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Resources\explosion.wav" />
     <None Include="Resources\bullet.png" />
     <None Include="Resources\ufo.png" />
     <None Include="Resources\asteroid5.png" />

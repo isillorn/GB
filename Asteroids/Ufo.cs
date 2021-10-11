@@ -22,6 +22,11 @@ namespace Asteroids
             Game.Buffer.Graphics.DrawImage(Resources.ufo, pos.X, pos.Y);
         }
 
+        public override void Regenerate()
+        {
+            //throw new NotImplementedException();
+        }
+
         public override void Update()
         {
             //bool needTeleport = false;

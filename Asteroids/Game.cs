@@ -19,8 +19,41 @@ namespace Asteroids
         static BaseObject[] _ufo;
         static Bullet _bullet;
 
-        public static int Width { get; set; }
-        public static int Height { get; set; }
+        private static int _width;
+        private static int _height;
+
+        public static int Width {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                if (value <= 1000 && value > 0)
+                {
+                    _width = value;
+                } else { 
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+        public static int Height {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                if (value <= 1000 && value > 0)
+                {
+                    _height = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
 
         public static void Init(Form form)
         {
@@ -38,6 +71,14 @@ namespace Asteroids
             timer.Interval = 50;
             timer.Tick += Timer_Tick;
             timer.Start();
+
+        }
+
+        private static void Play()
+        {
+            System.IO.Stream stream = Resources.explosion;
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(stream);
+            player.Play();
         }
 
         private static void Timer_Tick(object sender, EventArgs e)
@@ -58,7 +99,7 @@ namespace Asteroids
             {
                 var size = rnd.Next(0, 5);
                 var pos = new Point(rnd.Next(0, Width - (size + 1) *10), rnd.Next(0, Height - (size +1 )*10));
-                var dir = new Point(rnd.Next(0,10), rnd.Next(0, 10));
+                var dir = new Point(rnd.Next(-10,10), rnd.Next(-10, 10));
                 _asteroids[i] = new Asteroid(pos, dir, size);
             }
 
@@ -71,7 +112,7 @@ namespace Asteroids
             for (int i = 0; i < _ufo.Length; i++)
             {
                 var pos = new Point(rnd.Next(0, Width-100), rnd.Next(0, Height-100));
-                var dir = new Point(rnd.Next(0, 10), rnd.Next(0, 10));
+                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
                 _ufo[i] = new Ufo(pos, dir, rnd);
             }
         }
@@ -83,7 +124,10 @@ namespace Asteroids
                 asteroid.Update();
                 if (asteroid.Collision(_bullet))
                 {
-                    System.Media.SystemSounds.Hand.Play();
+                    Play();
+                    _bullet.Regenerate();
+                    asteroid.Regenerate();
+
                 }
             }
 

@@ -26,6 +26,13 @@ namespace Asteroids
             Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y);
         }
 
+        public override void Regenerate()
+        {
+            Random rnd = new Random();
+            pos.X = rnd.Next(0, Game.Width - size.Width);
+            pos.Y = rnd.Next(0, Game.Height - size.Height);
+        }
+
         public override void Update()
         {
             pos.X = pos.X + dir.X;

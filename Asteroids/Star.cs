@@ -26,6 +26,11 @@ namespace Asteroids
             Game.Buffer.Graphics.DrawPolygon(penColors[color], points);
         }
 
+        public override void Regenerate()
+        {
+            //throw new NotImplementedException();
+        }
+
         public override void Update()
         {
             int changeColor = rnd.Next(0, 100); // регулируем скорость мерцания

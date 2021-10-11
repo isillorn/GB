@@ -15,6 +15,20 @@ namespace Asteroids
 
         public BaseObject(Point pos, Point dir, Size size)
         {
+            if (size.Height > 100 | size.Height < 0 | size.Width >100 | size.Height < 0)
+            {
+                throw new GameObjectException($"Incorrect object size ({size.Width},{size.Height})");
+            }
+
+            if ( dir.X > 10 | dir.X < -10 | dir.Y > 10 | dir.Y < -10 ) {
+                throw new GameObjectException($"Incorrect object speed ({dir.X},{dir.Y})");
+            }
+
+            if (pos.X < 0 | pos.X > Game.Width - size.Width | pos.Y < 0 | pos.Y > Game.Height - size.Height)
+            {
+                throw new GameObjectException($"Incorrect object position ({pos.X},{pos.Y})");
+            }
+
             this.pos = pos;
             this.dir = dir;
             this.size = size;
@@ -35,7 +49,7 @@ namespace Asteroids
 
         public abstract void Draw();
         public abstract void Update();
-
+        public abstract void Regenerate();
 
 
     }
