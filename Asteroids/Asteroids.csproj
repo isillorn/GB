@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
+    <Compile Include="BaseObject.cs" />
+    <Compile Include="Bullet.cs" />
+    <Compile Include="ICollision.cs" />
     <Compile Include="Ufo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -77,6 +80,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Resources\bullet.png" />
     <None Include="Resources\ufo.png" />
     <None Include="Resources\asteroid5.png" />
     <None Include="Resources\asteroid4.png" />

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Asteroids
 {
-    class Ufo : Asteroid
+    class Ufo : BaseObject
     {
         private Random rnd;
 
-        public Ufo(Point pos, Point dir, Random rnd) : base(pos, dir, 0)
+        public Ufo(Point pos, Point dir, Random rnd) : base(pos, dir, new Size(0,0))
         {
             this.rnd = rnd;
         }

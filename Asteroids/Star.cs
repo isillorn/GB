@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Asteroids
 {
-    class Star : Asteroid
+    class Star : BaseObject
     {
         protected int color;
         protected Pen[] penColors = new Pen[] { Pens.Transparent, Pens.Gray, Pens.LightGray, Pens.White, Pens.LightBlue };
         //protected Pen[] penColors = new Pen[] { Pens.Gray, Pens.LightBlue, Pens. };
         private Random rnd; // используем общий рандомайзер, иначе выдает одинаковые последовательности
 
-        public Star(Point pos, Random rnd) : base(pos, new Point(0,0), 0)
+        public Star(Point pos, Random rnd) : base(pos, new Point(0,0), new Size(0,0))
         {
             this.rnd = rnd; 
             color = 0;
