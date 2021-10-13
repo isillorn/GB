@@ -16,6 +16,7 @@ namespace Asteroids
         {
             //Console.Clear();
             _fs = File.AppendText(_logfile);
+            _fs.AutoFlush = true;
             _fs.WriteLine("===== NEW GAME =====");
         }
 
