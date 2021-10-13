@@ -22,8 +22,6 @@ namespace Asteroids
         static Timer timer = new Timer();
         static Logger logger = new Logger();
 
-        private static  Random rnd = new Random();
-
         private static int _width;
         private static int _height;
 
@@ -77,16 +75,6 @@ namespace Asteroids
             timer.Tick += Timer_Tick;
             timer.Start();
 
-            form.KeyDown += Form_KeyDown;
-            
-        }
-
-        
-        private static void Form_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up) _ship.Up();
-            if (e.KeyCode == Keys.Down) _ship.Down();
-            if (e.KeyCode == Keys.Space && _bullet == null) _bullet = new Bullet(new Point(_ship.Rect.X + _ship.Rect.Width, _ship.Rect.Y + 20), new Point(25, 0));
         }
 
         private static void Play()
@@ -104,20 +92,17 @@ namespace Asteroids
 
         public static void Load()
         {
+            Random rnd = new Random();
             _asteroids = new BaseObject[10];
             _stars = new BaseObject[50];
             _ufo = new BaseObject[3];
-            _ship = new Ship(new Point(0, 300), new Point(0,10), new Size(50,50));
-
-            _ship.DieEvent += onDieEvent;
-            _ship.EnergyChangeEvent += onEnergyChangeEvent;
-            _ship.ScoreEvent += onScoreEvent;
+            _bullet = new Bullet(new Point(0,rnd.Next(0,Height)), new Point(5, 0));
 
             for (int i=0; i < _asteroids.Length; i++)
             {
                 var size = rnd.Next(0, 5);
                 var pos = new Point(rnd.Next(0, Width - (size + 1) *10), rnd.Next(0, Height - (size +1 )*10));
-                var dir = new Point(rnd.Next(-10,10), rnd.Next(-10, 10));
+                var dir = new Point(rnd.Next(0,10), rnd.Next(0, 10));
                 _asteroids[i] = new Asteroid(pos, dir, size);
             }
 
@@ -130,7 +115,7 @@ namespace Asteroids
             for (int i = 0; i < _ufo.Length; i++)
             {
                 var pos = new Point(rnd.Next(0, Width-100), rnd.Next(0, Height-100));
-                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
+                var dir = new Point(rnd.Next(0, 10), rnd.Next(0, 10));
                 _ufo[i] = new Ufo(pos, dir, rnd);
             }
         }
@@ -165,26 +150,13 @@ namespace Asteroids
             //foreach (var asteroid in _asteroids)
             for (int i = 0; i < _asteroids.Length; i++)
             {
-                if (_asteroids[i] == null) continue;
-
-                _asteroids[i].Update();
-
-                if (_bullet != null && _asteroids[i].Collision(_bullet))
+                asteroid.Update();
+                if (asteroid.Collision(_bullet))
                 {
                     Play();
-                    _bullet = null;
-                    _asteroids[i] = null;
-                    _ship.ScoreChange(1);
-                    continue;
-                }
+                    _bullet.Regenerate();
+                    asteroid.Regenerate();
 
-                if (_ship != null && _asteroids[i].Collision(_ship))
-                {
-                    _ship.EnergyChange(rnd.Next(-30, -10));
-                    // Play sound
-                    _asteroids[i] = null;
-                    if (_ship.Energy <= 0)
-                        _ship.Die();
                 }
 
             }
@@ -199,11 +171,7 @@ namespace Asteroids
                 ufo.Update();
             }
 
-            if (_bullet != null)
-            {
-                _bullet.Update();
-                if (_bullet.Rect.X > Width) _bullet = null;
-            }
+            _bullet.Update();
         }
 
 
@@ -230,13 +198,7 @@ namespace Asteroids
                 ufo.Draw();
             }
 
-            if (_bullet != null ) _bullet.Draw();
-            if (_ship != null)
-            {
-                _ship.Draw();
-                Buffer.Graphics.DrawString($"Energy: {_ship.Energy}", new Font(FontFamily.GenericSansSerif,16,FontStyle.Bold), Brushes.Cyan, Width - 300,0);
-                Buffer.Graphics.DrawString($"Score: {_ship.Score}", new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), Brushes.Yellow, Width - 150, 0);
-            }
+            _bullet.Draw();
 
             Buffer.Render();
         }
