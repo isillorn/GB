@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Asteroids
 {
-    class Ufo : Asteroid
+    class Ufo : BaseObject
     {
         private Random rnd;
 
-        public Ufo(Point pos, Point dir, Random rnd) : base(pos, dir, 0)
+        public Ufo(Point pos, Point dir, Random rnd) : base(pos, dir, new Size(0, 0))
         {
             this.rnd = rnd;
         }
@@ -20,6 +20,11 @@ namespace Asteroids
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(Resources.ufo, pos.X, pos.Y);
+        }
+
+        public override void Regenerate()
+        {
+            //throw new NotImplementedException();
         }
 
         public override void Update()
@@ -39,8 +44,9 @@ namespace Asteroids
             {
                 dir.X = rnd.Next(-5, 5);
                 dir.Y = rnd.Next(-5, 5);
-            } 
-            else { 
+            }
+            else
+            {
                 pos.X = pos.X + dir.X;
                 pos.Y = pos.Y + dir.Y;
 
@@ -55,7 +61,7 @@ namespace Asteroids
                 }
 
             }
-         
+
         }
     }
 }
