@@ -23,10 +23,6 @@ namespace Asteroids
         public override void Update()
         {
             pos.X = pos.X + dir.X;
-           // if (pos.X > Game.Width)
-           // {
-           //     Regenerate();
-           // }
         }
 
         public override void Regenerate()
@@ -34,7 +30,6 @@ namespace Asteroids
             Random rnd = new Random();
             pos.X = 0;
             pos.Y = rnd.Next(0, Game.Height);
-            
         }
     }
 }

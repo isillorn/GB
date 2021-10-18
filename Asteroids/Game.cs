@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Asteroids.Properties;
+//using System.Windows.Media;
 
 namespace Asteroids
 {
@@ -13,23 +14,46 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _ctx;
         public static BufferedGraphics Buffer;
-        //static Image background;
-        static BaseObject[] _asteroids;
-        static BaseObject[] _stars;
-        static BaseObject[] _ufo;
-        static Medikit[] _medikit;
-        static Bullet _bullet;
+
+        static List<Asteroid> _asteroids;
+        static List<Bullet> _bullets;
+        static List<Medikit> _medikits;
+        static List<Star> _stars;
+        static List<Ufo> _ufo;
         static Ship _ship;
 
         static Timer timer = new Timer();
         static Logger logger = new Logger();
 
         private static Random rnd = new Random();
+        //private static System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+        //private static MediaPlayer player = new MediaPlayer();
+
+        private static Dictionary<string, System.Media.SoundPlayer> GameSounds = new Dictionary<string, System.Media.SoundPlayer>
+        {
+            ["shot"] = new System.Media.SoundPlayer(Resources.shot),
+            ["explosion"] = new System.Media.SoundPlayer(Resources.explosion),
+            ["medikit"] = new System.Media.SoundPlayer(Resources.medi),
+            ["damage"] = new System.Media.SoundPlayer(Resources.damage),
+            ["level"] = new System.Media.SoundPlayer(Resources.level_theme)
+        };
+
+        //private static Dictionary<string, System.IO.Stream> GameSounds = new Dictionary<string, System.IO.Stream>
+        //{
+        //    ["shot"] = Resources.shot,
+        //    ["explosion"] = Resources.explosion,
+        //    ["medikit"] = Resources.medi,
+        //    ["damage"] = Resources.damage,
+        //    ["level"] = Resources.level_theme
+        //};
+
+
 
         private static int _width;
         private static int _height;
 
-        public static Random Rnd {
+        public static Random Rnd
+        {
             get { return rnd; }
         }
 
@@ -89,6 +113,8 @@ namespace Asteroids
 
             form.KeyDown += Form_KeyDown;
 
+            //PlaySound("level", true);
+
         }
 
 
@@ -96,15 +122,27 @@ namespace Asteroids
         {
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
-            if (e.KeyCode == Keys.Space && _bullet == null) _bullet = new Bullet(new Point(_ship.Rect.X + _ship.Rect.Width, _ship.Rect.Y + 20), new Point(25, 0));
+            if (e.KeyCode == Keys.Space && _bullets.Count < 5)
+            {
+                PlaySound("shot");
+                _bullets.Add(new Bullet(new Point(_ship.Rect.X + _ship.Rect.Width, _ship.Rect.Y + 20), new Point(25, 0)));
+            }
         }
 
-        private static void Play()
+        private static void PlaySound(string sound, bool loop = false)
         {
-            System.IO.Stream stream = Resources.explosion;
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(stream);
-            player.Play();
+            //System.IO.Stream stream = GameSounds[sound];
+            if (loop)
+            {
+                GameSounds[sound].PlayLooping();
+            }
+            else
+            {
+                GameSounds[sound].Play();
+            }
+           
         }
+
 
         private static void Timer_Tick(object sender, EventArgs e)
         {
@@ -114,42 +152,32 @@ namespace Asteroids
 
         public static void Load()
         {
-            _asteroids = new BaseObject[10];
-            _medikit = new Medikit[5];
-            _stars = new BaseObject[50];
-            _ufo = new BaseObject[3];
+            _asteroids = new List<Asteroid>();
+            _medikits = new List<Medikit>();
+            _bullets = new List<Bullet>();
+            _stars = new List<Star>();
+            _ufo = new List<Ufo>();
             _ship = new Ship(new Point(0, 300), new Point(0, 10), new Size(50, 50));
 
             _ship.DieEvent += onDieEvent;
             _ship.EnergyChangeEvent += onEnergyChangeEvent;
             _ship.ScoreEvent += onScoreEvent;
 
-            for (int i = 0; i < _asteroids.Length; i++)
-            {
-                var size = rnd.Next(0, 5);
-                var pos = new Point(rnd.Next(0, Width - (size + 1) * 10), rnd.Next(0, Height - (size + 1) * 10));
-                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
-                _asteroids[i] = new Asteroid(pos, dir, size);
-            }
+            ReloadGameObjects();
 
-            for (int i = 0; i < _medikit.Length; i++)
-            {
-                var pos = new Point(rnd.Next(0, Width - 25), rnd.Next(0, Height - 25));
-                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
-                _medikit[i] = new Medikit(pos, dir);
-            }
+            
 
-            for (int i = 0; i < _stars.Length; i++)
+            for (int i = 0; i <= 30; i++)
             {
                 var pos = new Point(rnd.Next(0, Width), rnd.Next(0, Height));
-                _stars[i] = new Star(pos, rnd);
+                _stars.Add(new Star(pos, rnd));
             }
 
-            for (int i = 0; i < _ufo.Length; i++)
+            for (int i = 0; i <= 2; i++)
             {
                 var pos = new Point(rnd.Next(0, Width - 100), rnd.Next(0, Height - 100));
                 var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
-                _ufo[i] = new Ufo(pos, dir, rnd);
+                _ufo.Add(new Ufo(pos, dir, rnd));
             }
         }
 
@@ -179,99 +207,106 @@ namespace Asteroids
 
         }
 
+
+        public static void ReloadGameObjects()
+        {
+
+            _asteroids.Clear();
+            _medikits.Clear();
+
+            for (int i = 1; i <= 15; i++)
+            {
+                var size = rnd.Next(0, 5);
+                var pos = new Point(rnd.Next(0, Width - (size + 1) * 10), rnd.Next(0, Height - (size + 1) * 10));
+                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
+                _asteroids.Add(new Asteroid(pos, dir, size));
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                var pos = new Point(rnd.Next(0, Width - 25), rnd.Next(0, Height - 25));
+                var dir = new Point(rnd.Next(-10, 10), rnd.Next(-10, 10));
+                _medikits.Add(new Medikit(pos, dir));
+            }
+        }
+
         public static void Update()
         {
-            //foreach (var asteroid in _asteroids)
-            for (int i = 0; i < _asteroids.Length; i++)
-            {
-                if (_asteroids[i] == null) continue;
 
+            if (_asteroids.Count <= 0) ReloadGameObjects();
+
+            for (int i = _bullets.Count - 1; i >= 0; i--)
+            {
+                _bullets[i].Update();
+                if (_bullets[i].Rect.X > Width) _bullets.Remove(_bullets[i]);
+            }
+
+            foreach (var star in _stars) star.Update();
+            foreach (var ufo in _ufo) ufo.Update();
+
+            for (int i = _asteroids.Count - 1; i >= 0; i--)
+            {
+                var isDestructed = false;
                 _asteroids[i].Update();
 
-                if (_bullet != null && _asteroids[i].Collision(_bullet))
+                for (int j = _bullets.Count - 1; j >= 0; j--)
                 {
-                    Play();
-                    _bullet = null;
-                    _asteroids[i] = null;
-                    _ship.ScoreChange(1);
-                    continue;
+                    if (_asteroids[i].Collision(_bullets[j]))
+                    {
+                        PlaySound("explosion");
+                        _ship.ScoreChange(1);
+                        _asteroids.Remove(_asteroids[i]);
+                        _bullets.Remove(_bullets[j]);
+                        isDestructed = true;
+                        break;
+                    }
                 }
 
-                if (_ship != null && _asteroids[i].Collision(_ship))
+                if (!isDestructed && _asteroids[i].Collision(_ship))
                 {
+                    PlaySound("damage");
                     _ship.EnergyChange(rnd.Next(-30, -10));
-                    Play();
-                    _asteroids[i] = null;
+                    _asteroids.Remove(_asteroids[i]);
                     if (_ship.Energy <= 0)
                         _ship.Die();
                 }
-
             }
 
-            for (int i = 0; i < _medikit.Length; i++)
+            for (int i = _medikits.Count - 1; i >= 0; i--)
             {
-                if (_medikit[i] == null) continue;
+                _medikits[i].Update();
 
-                _medikit[i].Update();
-
-                if (_bullet != null && _medikit[i].Collision(_bullet))
+                for (int j = _bullets.Count - 1; j >= 0; j--)
                 {
-                    Play();
-                    _bullet = null;
-                    _ship.EnergyChange(_medikit[i].Health);
-                    _medikit[i] = null;
-                    continue;
+                    if (_medikits[i].Collision(_bullets[j]))
+                    {
+                        PlaySound("medikit");
+                        _ship.EnergyChange(_medikits[i].Health);
+                        _ship.ScoreChange(1);
+                        _medikits.Remove(_medikits[i]);
+                        _bullets.Remove(_bullets[j]);
+                        break;
+                    }
+
                 }
-            }
-
-
-            foreach (var star in _stars)
-            {
-                star.Update();
-            }
-
-            foreach (var ufo in _ufo)
-            {
-                ufo.Update();
-            }
-
-            if (_bullet != null)
-            {
-                _bullet.Update();
-                if (_bullet.Rect.X > Width) _bullet = null;
             }
         }
 
 
         public static void Draw()
         {
-            //Buffer.Graphics.Clear(Color.Black);
-
             Buffer.Graphics.DrawImage(Resources.back, new Point(0, 0));
-            
-            foreach (var star in _stars)
-            {
-                star.Draw();
-            }
 
-            foreach (var ufo in _ufo)
-            {
-                ufo.Draw();
-            }
+            foreach (var star in _stars) star.Draw();
+            foreach (var ufo in _ufo) ufo.Draw();
 
             Buffer.Graphics.DrawImage(Resources.saturn, new Point(100, 100));
 
-            foreach (var asteroid in _asteroids)
-            {
-                if (asteroid != null) asteroid.Draw();
-            }
 
-            foreach (var medikit in _medikit)
-            {
-                if (medikit != null) medikit.Draw();
-            }
-            
-            if (_bullet != null) _bullet.Draw();
+            foreach (var medikit in _medikits) medikit.Draw();
+            foreach (var asteroid in _asteroids) asteroid.Draw();
+            foreach (var bullet in _bullets) bullet.Draw();
+
             if (_ship != null)
             {
                 _ship.Draw();
@@ -283,3 +318,6 @@ namespace Asteroids
         }
     }
 }
+
+
+

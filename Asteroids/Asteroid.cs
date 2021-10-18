@@ -12,6 +12,7 @@ namespace Asteroids
     {
         protected Image[] images = new Image[] { Resources.asteroid1, Resources.asteroid2, Resources.asteroid3, Resources.asteroid4, Resources.asteroid5 };
         protected Image image;
+        protected int health;
 
         public Asteroid(Point pos, Point dir, int size) : base(pos, dir, new Size(size * 10, size * 10))
         {

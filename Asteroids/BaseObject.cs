@@ -24,7 +24,7 @@ namespace Asteroids
                 throw new GameObjectException($"Incorrect object speed ({dir.X},{dir.Y})");
             }
 
-            if (pos.X < 0 | pos.X > Game.Width - size.Width | pos.Y < 0 | pos.Y > Game.Height - size.Height)
+            if (pos.X < 0 | pos.X > Game.Width | pos.Y < 0 | pos.Y > Game.Height)
             {
                 throw new GameObjectException($"Incorrect object position ({pos.X},{pos.Y})");
             }

@@ -133,9 +133,36 @@ namespace Asteroids.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream damage {
+            get {
+                return ResourceManager.GetStream("damage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream explosion {
             get {
                 return ResourceManager.GetStream("explosion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream level_theme {
+            get {
+                return ResourceManager.GetStream("level_theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream medi {
+            get {
+                return ResourceManager.GetStream("medi", resourceCulture);
             }
         }
         
@@ -176,6 +203,15 @@ namespace Asteroids.Properties {
             get {
                 object obj = ResourceManager.GetObject("ship150", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream shot {
+            get {
+                return ResourceManager.GetStream("shot", resourceCulture);
             }
         }
         
