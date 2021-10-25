@@ -80,5 +80,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoolWork.Data\CoolWork.Data.csproj">
+      <Project>{EDCEE6F0-E29E-4C63-8A2E-41713F3ECBD5}</Project>
+      <Name>CoolWork.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
