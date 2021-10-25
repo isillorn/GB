@@ -1,6 +1,7 @@
 ﻿using CoolWork.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,16 @@ namespace CoolWork
     public partial class EmployeeEditor : Window
     {
         public Employee Employee { get; set; } = new Employee();
+       // public ObservableCollection<Position> PositionList { get; set; }
+        //public ObservableCollection<Department> DepartmentList { get; set; }
 
-        public EmployeeEditor()
+        public EmployeeEditor(ObservableCollection<Position> positionList, ObservableCollection<Department> departmentList)
         {
             InitializeComponent();
             employeeControl.Employee = Employee;
+            employeeControl.DepartmentList = departmentList;
+            employeeControl.PositionList = positionList;
+            
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

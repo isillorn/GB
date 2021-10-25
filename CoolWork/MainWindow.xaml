@@ -7,16 +7,9 @@
         xmlns:Controls="clr-namespace:CoolWork.Controls;assembly=CoolWork.Controls" x:Class="CoolWork.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="389" Width="569">
-    <Grid Margin="0,0,0,8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="210*"/>
-            <RowDefinition Height="209*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="165*"/>
-            <ColumnDefinition Width="212*"/>
-        </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding EmployeeList}" SelectedItem="{Binding SelectedEmployee}" SelectionMode="Single" Margin="10,10,5,21" Grid.RowSpan="2" SelectionChanged="lvEmployee_SelectionChanged">
+    <Grid>
+
+        <ListView ItemsSource="{Binding EmployeeList}" SelectedItem="{Binding SelectedEmployee}" SelectionMode="Single" Margin="10,10,294,21" SelectionChanged="lvEmployee_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="auto"
@@ -33,10 +26,12 @@
             </ListView.View>
         </ListView>
 
-        <Controls:EmployeeControl x:Name="employeeControl" Margin="26,10,0,0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="269" Height="244" VerticalAlignment="Top"/>
-        <Button x:Name="btnEdit" Content="Править" Grid.Column="1" Margin="217,89,0,0" Grid.Row="1" Click="btnEdit_Click" HorizontalAlignment="Left" Width="65" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="btnRemove" Content="Удалить" Grid.Column="1" Margin="26,89,0,0" Grid.Row="1" Click="btnRemove_Click" HorizontalAlignment="Left" Width="60" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="btnAdd" Content="Создать" Grid.Column="1" Margin="151,89,0,0" Grid.Row="1" Click="btnAdd_Click" HorizontalAlignment="Left" Width="61" Height="20" VerticalAlignment="Top"/>
+
+
+        <Controls:EmployeeControl x:Name="employeeControl" Margin="0,10,10,0" HorizontalAlignment="Right" Width="269" Height="244" VerticalAlignment="Top"/>
+        <Button x:Name="btnEdit" Content="Править" Margin="0,259,24,0" Click="btnEdit_Click" HorizontalAlignment="Right" Width="65" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="btnRemove" Content="Удалить" Margin="0,259,219,0" Click="btnRemove_Click" HorizontalAlignment="Right" Width="60" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="btnAdd" Content="Создать" Margin="0,259,94,0" Click="btnAdd_Click" HorizontalAlignment="Right" Width="61" Height="20" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

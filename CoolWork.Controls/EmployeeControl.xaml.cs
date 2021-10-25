@@ -25,7 +25,7 @@ namespace CoolWork.Controls
 
         private Employee _employee;
 
-        public ObservableCollection<Position> PositionList1 { get; set; }  = new ObservableCollection<Position>();
+        public ObservableCollection<Position> PositionList { get; set; }  = new ObservableCollection<Position>();
         public ObservableCollection<Department> DepartmentList { get; set; } = new ObservableCollection<Department>();
 
         public Employee Employee
@@ -53,24 +53,27 @@ namespace CoolWork.Controls
         {
             InitializeComponent();
             DataContext = this;
-
-            PositionList1 = PositionList.
-
             
             //cbDept.ItemsSource = Enum.GetValues(typeof(Department)).Cast<Department>();
             //cbPosition.ItemsSource = Enum.GetValues(typeof(Position)).Cast<Position>();
         }
 
-        private void btnAddDept_Click(object sender, RoutedEventArgs e)
-        {
-            //
-        }
-
         private void btnAddPos_Click(object sender, RoutedEventArgs e)
         {
-            //
+            AddEntity addEntity = new AddEntity();
+            if (addEntity.ShowDialog() == true)
+            {
+                PositionList.Add(new Position(addEntity.Entity));
+            }
         }
 
-
+        private void btnAddDept_Click(object sender, RoutedEventArgs e)
+        {
+            AddEntity addEntity = new AddEntity();
+            if (addEntity.ShowDialog() == true)
+            {
+                DepartmentList.Add(new Department(addEntity.Entity));
+            }
+        }
     }
 }

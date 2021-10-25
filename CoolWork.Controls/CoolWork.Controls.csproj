@@ -48,10 +48,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AddEntity.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EmployeeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddEntity.xaml.cs">
+      <DependentUpon>AddEntity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeControl.xaml.cs">
       <DependentUpon>EmployeeControl.xaml</DependentUpon>
       <SubType>Code</SubType>

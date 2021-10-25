@@ -41,6 +41,9 @@ namespace CoolWork
             PositionList = positiontDatabase.Positions;
             employeeDatabase = new EmployeeDatabase(DepartmentList, PositionList);
 
+            employeeControl.PositionList = PositionList;
+            employeeControl.DepartmentList = DepartmentList;
+
             EmployeeList = employeeDatabase.Employees;
         }
 
@@ -76,7 +79,9 @@ namespace CoolWork
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeEditor employeeEditor = new EmployeeEditor();
+            EmployeeEditor employeeEditor = new EmployeeEditor(PositionList, DepartmentList);
+            //employeeEditor.DepartmentList = DepartmentList;
+            //employeeEditor.PositionList = PositionList;
             if (employeeEditor.ShowDialog() == true)
             {
                 employeeDatabase.Employees.Add(employeeEditor.Employee);

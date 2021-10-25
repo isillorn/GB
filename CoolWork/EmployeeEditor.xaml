@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:CoolWork"
         xmlns:Controls="clr-namespace:CoolWork.Controls;assembly=CoolWork.Controls" x:Class="CoolWork.EmployeeEditor"
         mc:Ignorable="d"
-        Title="EmployeeEditor" Height="384" Width="429">
-    <Grid Margin="0,0,10,14">
+        Title="EmployeeEditor" Height="320" Width="290" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
 
-        <Controls:EmployeeControl x:Name="employeeControl" Margin="10,10,0,25"/>
-        <Button x:Name="btnCancel" Content="Отмена" HorizontalAlignment="Left" Margin="340,334,0,0" VerticalAlignment="Top" RenderTransformOrigin="-6.94,-1.49" Width="69" Click="btnCancel_Click"/>
-        <Button x:Name="btnOk" Content="OK" HorizontalAlignment="Left" Margin="250,334,0,0" VerticalAlignment="Top" RenderTransformOrigin="-6.94,-1.49" Width="75" Click="btnOk_Click"/>
+        <Controls:EmployeeControl x:Name="employeeControl" Margin="10,10,0,0" HorizontalAlignment="Left" Width="268" Height="244" VerticalAlignment="Top"/>
+        <Button x:Name="btnCancel" Content="Отмена" HorizontalAlignment="Left" Margin="195,254,0,0" VerticalAlignment="Top" RenderTransformOrigin="-6.94,-1.49" Width="69" Click="btnCancel_Click"/>
+        <Button x:Name="btnOk" Content="OK" HorizontalAlignment="Left" Margin="115,254,0,0" VerticalAlignment="Top" RenderTransformOrigin="-6.94,-1.49" Width="75" Click="btnOk_Click"/>
 
     </Grid>
 </Window>
