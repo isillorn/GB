@@ -53,9 +53,9 @@ namespace CoolWork.Controls
         {
             InitializeComponent();
             DataContext = this;
-            
-            //cbDept.ItemsSource = Enum.GetValues(typeof(Department)).Cast<Department>();
-            //cbPosition.ItemsSource = Enum.GetValues(typeof(Position)).Cast<Position>();
+
+            PositionList = PositionDatabase.Get();
+            DepartmentList = DepartmentDatabase.Get();
         }
 
         private void btnAddPos_Click(object sender, RoutedEventArgs e)

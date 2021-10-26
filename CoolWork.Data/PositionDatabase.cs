@@ -8,9 +8,17 @@ using System.Threading.Tasks;
 
 namespace CoolWork
 {
-    class PositionDatabase
+    public class PositionDatabase
     {
 
+        private static PositionDatabase _positionDatabase;
+
+        public static ObservableCollection<Position> Get()
+        {
+            if (_positionDatabase == null)
+                _positionDatabase = new PositionDatabase();
+            return _positionDatabase.Positions;
+        }
 
         public ObservableCollection<Position> Positions { get; set; } = new ObservableCollection<Position>();
 

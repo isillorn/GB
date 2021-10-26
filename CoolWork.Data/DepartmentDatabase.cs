@@ -8,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace CoolWork
 {
-    class DepartmentDatabase
+    public class DepartmentDatabase
+
     {
+        private static DepartmentDatabase _departmentDatabase;
+
+        public static ObservableCollection<Department> Get()
+        {
+            if (_departmentDatabase == null)
+                _departmentDatabase = new DepartmentDatabase();
+            return _departmentDatabase.Departments;
+        }
+
+
         public ObservableCollection<Department> Departments { get; set; } = new ObservableCollection<Department>();
         
         public DepartmentDatabase()
