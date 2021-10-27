@@ -11,8 +11,19 @@ namespace CoolWork.Data
     public class Position : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         private string _positionName;
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public string PositionName
         {
@@ -32,9 +43,16 @@ namespace CoolWork.Data
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
             }
         }
+        internal Position() { }
 
         public Position(string positionName)
         {
+            _positionName = positionName;
+        }
+
+            public Position(int id, string positionName)
+        {
+            _id = id;
             _positionName = positionName;
         }
 

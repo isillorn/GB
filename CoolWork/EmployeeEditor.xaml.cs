@@ -25,12 +25,12 @@ namespace CoolWork
        // public ObservableCollection<Position> PositionList { get; set; }
         //public ObservableCollection<Department> DepartmentList { get; set; }
 
-        public EmployeeEditor(ObservableCollection<Position> positionList, ObservableCollection<Department> departmentList)
+        public EmployeeEditor(PositionDatabase positionDatabase, DepartmentDatabase departmentDatabase)
         {
             InitializeComponent();
             employeeControl.Employee = Employee;
-            employeeControl.DepartmentList = departmentList;
-            employeeControl.PositionList = positionList;
+            employeeControl.DepartmentDB = departmentDatabase;
+            employeeControl.PositionDB = positionDatabase;
             
         }
 

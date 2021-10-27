@@ -25,8 +25,12 @@ namespace CoolWork.Controls
 
         private Employee _employee;
 
-        public ObservableCollection<Position> PositionList { get; set; }  = new ObservableCollection<Position>();
-        public ObservableCollection<Department> DepartmentList { get; set; } = new ObservableCollection<Department>();
+        //public ObservableCollection<Position> PositionList { get; set; }//  = new ObservableCollection<Position>();
+        //public ObservableCollection<Department> DepartmentList { get; set; }// = new ObservableCollection<Department>();
+
+        public DepartmentDatabase DepartmentDB { get; set; }
+        public PositionDatabase PositionDB { get; set; }
+
 
         public Employee Employee
         {
@@ -54,8 +58,8 @@ namespace CoolWork.Controls
             InitializeComponent();
             DataContext = this;
 
-            PositionList = PositionDatabase.Get();
-            DepartmentList = DepartmentDatabase.Get();
+            //PositionList = PositionDatabase.Get();
+            //DepartmentList = DepartmentDatabase.Get();
         }
 
         private void btnAddPos_Click(object sender, RoutedEventArgs e)
@@ -63,7 +67,8 @@ namespace CoolWork.Controls
             AddEntity addEntity = new AddEntity();
             if (addEntity.ShowDialog() == true)
             {
-                PositionList.Add(new Position(addEntity.Entity));
+               PositionDB.Add(new Position(addEntity.Entity));
+                
             }
         }
 
@@ -72,7 +77,7 @@ namespace CoolWork.Controls
             AddEntity addEntity = new AddEntity();
             if (addEntity.ShowDialog() == true)
             {
-                DepartmentList.Add(new Department(addEntity.Entity));
+                DepartmentDB.Add(new Department(addEntity.Entity));
             }
         }
     }

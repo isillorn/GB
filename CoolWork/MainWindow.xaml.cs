@@ -24,7 +24,7 @@ namespace CoolWork
     public partial class MainWindow : Window
     {
         private DepartmentDatabase departmentDatabase = new DepartmentDatabase();
-        private PositionDatabase positiontDatabase = new PositionDatabase();
+        private PositionDatabase positionDatabase = new PositionDatabase();
         private EmployeeDatabase employeeDatabase; //= new EmployeeDatabase();
 
         public ObservableCollection<Employee> EmployeeList { get; set; }
@@ -38,11 +38,11 @@ namespace CoolWork
             InitializeComponent();
             DataContext = this;
             DepartmentList = departmentDatabase.Departments;
-            PositionList = positiontDatabase.Positions;
+            PositionList = positionDatabase.Positions;
             employeeDatabase = new EmployeeDatabase(DepartmentList, PositionList);
 
-            employeeControl.PositionList = PositionList;
-            employeeControl.DepartmentList = DepartmentList;
+            employeeControl.PositionDB = positionDatabase;
+            employeeControl.DepartmentDB = departmentDatabase;
 
             EmployeeList = employeeDatabase.Employees;
         }
@@ -59,10 +59,11 @@ namespace CoolWork
         {
             if (SelectedEmployee == null) return;
 
-            EmployeeList[EmployeeList.IndexOf(SelectedEmployee)] = employeeControl.Employee;
-            //employeeControl.UpdateContact();
-            //UpdateBinding();
-
+            if (employeeDatabase.Update(employeeControl.Employee) > 0)
+            {
+                MessageBox.Show("Данные работника изменены", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                EmployeeList[EmployeeList.IndexOf(SelectedEmployee)] = employeeControl.Employee;
+            }
         }
 
         
@@ -71,32 +72,30 @@ namespace CoolWork
             if (SelectedEmployee == null) return;
 
             if (MessageBox.Show("Вы уверены?", "Удаление контакта", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes) {
-                employeeDatabase.Employees.Remove(SelectedEmployee);
+                if (employeeDatabase.Remove(employeeControl.Employee) > 0)
+                {
+                    MessageBox.Show("Данные работника удалены", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    employeeDatabase.Employees.Remove(SelectedEmployee);
+                    
+                }
             }
-
-            //UpdateBinding();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeEditor employeeEditor = new EmployeeEditor(PositionList, DepartmentList);
+            EmployeeEditor employeeEditor = new EmployeeEditor(positionDatabase, departmentDatabase);
             //employeeEditor.DepartmentList = DepartmentList;
             //employeeEditor.PositionList = PositionList;
             if (employeeEditor.ShowDialog() == true)
             {
-                employeeDatabase.Employees.Add(employeeEditor.Employee);
-                //UpdateBinding();
+                var id = employeeDatabase.Add(employeeEditor.Employee);
+                if (id > 0) 
+                {
+                    employeeEditor.Employee.Id = id;
+                    MessageBox.Show("Работник добавлен", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //employeeDatabase.Employees.Add(employeeEditor.Employee);
+                }
             }
-
         }
-
-
-        //private void UpdateBinding()
-        //{
-        //    lvEmployee.ItemsSource = null;
-        //    lvEmployee.ItemsSource = employeeDatabase.Employees;
-        //}
-
-        
     }
 }

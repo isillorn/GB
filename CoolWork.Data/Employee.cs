@@ -10,7 +10,7 @@ namespace CoolWork.Data
 {
     public class Employee: INotifyPropertyChanged, ICloneable
     {
-
+        private int _id;
         private string _firstName;
         private string _secondName;
         private string _lastName;
@@ -33,12 +33,19 @@ namespace CoolWork.Data
             return this.MemberwiseClone();
         }
 
+        public int Id { 
+            get { return _id;  }
+            set {
+                _id = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public string FirstName {
             get { return _firstName; }
             set { 
                 _firstName = value;
                 NotifyPropertyChanged();
-                    
             }
         }
         public string SecondName
@@ -99,19 +106,17 @@ namespace CoolWork.Data
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-       
-
-
-        public string FIO
-        {
-            get { return $"{LastName} {FirstName} {SecondName}"; }
-        }
+        //public string FIO
+        //{
+        //    get { return $"{LastName} {FirstName} {SecondName}"; }
+        //}
 
 
         public Employee() { }
 
-        public Employee(string firstName, string secondName, string lastName, string phone, Department dept, Position position, string comment)
+        public Employee(int id, string firstName, string secondName, string lastName, string phone, Department dept, Position position, string comment)
         {
+            Id = id;
             FirstName = firstName;
             SecondName = secondName;
             LastName = lastName;

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="DepartmentDatabase.cs" />
+    <Compile Include="EmployeeDatabase.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Employee.cs" />

@@ -12,6 +12,17 @@ namespace CoolWork.Data
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private string _deptname;
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                NotifyPropertyChanged();
+            }
+        }
 
 
         public string DeptName
@@ -32,8 +43,16 @@ namespace CoolWork.Data
             }
         }
 
+        internal Department() { }
+
         public Department(string deptName)
         {
+            _deptname = deptName;
+        }
+
+        public Department(int id, string deptName)
+        {
+            _id = id;
             _deptname = deptName;
         }
 
