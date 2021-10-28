@@ -1,0 +1,19 @@
+﻿<Window x:Class="CoolWork.AddEntity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoolWork"
+        mc:Ignorable="d"
+        Title="Добавить элемент" Height="110" Width="275" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid  >
+
+
+
+        <TextBox x:Name="tbEntity" Text="{Binding Entity, Mode=TwoWay}" HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnOk" Content="ОК" Margin="112,25,0,0" RenderTransformOrigin="0.5,0.5" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="64" Click="btnOk_Click"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="180,25,0,0" Click="btnCancel_Click"  Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="64"/>
+
+
+    </Grid>
+</Window>

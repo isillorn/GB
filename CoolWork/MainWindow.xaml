@@ -1,0 +1,37 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoolWork"
+        xmlns:Controls="clr-namespace:CoolWork.Controls;assembly=CoolWork.Controls" x:Class="CoolWork.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="389" Width="569">
+    <Grid>
+
+        <ListView ItemsSource="{Binding EmployeeList}" SelectedItem="{Binding SelectedEmployee}" SelectionMode="Single" Margin="10,10,294,21" SelectionChanged="lvEmployee_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="auto"
+                                    Header="Фамилия"
+                                    DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Width="auto"
+                                    Header="Имя"
+                                    DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Width="auto"
+                                    Header="Отчество"
+                                    DisplayMemberBinding="{Binding SecondName}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+        <Controls:EmployeeControl x:Name="employeeControl" Margin="0,10,10,0" HorizontalAlignment="Right" Width="269" Height="244" VerticalAlignment="Top"/>
+        <Button x:Name="btnEdit" Content="Править" Margin="0,259,24,0" Click="btnEdit_Click" HorizontalAlignment="Right" Width="65" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="btnRemove" Content="Удалить" Margin="0,259,219,0" Click="btnRemove_Click" HorizontalAlignment="Right" Width="60" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="btnAdd" Content="Создать" Margin="0,259,94,0" Click="btnAdd_Click" HorizontalAlignment="Right" Width="61" Height="20" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
